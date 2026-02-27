@@ -24,7 +24,9 @@ export default function Login() {
       return;
     }
     socket.connect();
-
+    await fetch(`${import.meta.env.VITE_API_URL}/api/me`, {
+      credentials: "include",
+    });
     navigate("/memory", { replace: true });
   };
 
