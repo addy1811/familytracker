@@ -16,6 +16,7 @@ dotenv.config();
 /* ------------------ APP + SERVER ------------------ */
 
 const app = express();
+app.set("trust proxy", 1);
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
@@ -24,7 +25,7 @@ const io = new Server(httpServer, {
     credentials: true
   }
 });
-
+const PORT = process.env.PORT || 4000;
 /* ------------------ MIDDLEWARE ------------------ */
 
 app.use(express.json({ limit: "2mb" }));
@@ -101,7 +102,7 @@ io.on("connection", (socket) => {
     console.log("🔴 Socket disconnected:", socket.userId);
   });
 });
-app.set("trust proxy", 1);
+
 /* ------------------ AUTH ROUTES ------------------ */
 
 app.post("/api/signup", async (req, res) => {
@@ -263,12 +264,16 @@ app.delete("/api/memories/:id", async (req, res) => {
 /* ------------------ LOGOUT ------------------ */
 
 app.post("/api/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+  });
   res.json({ success: true });
 });
 
 /* ------------------ START ------------------ */
 
-httpServer.listen(4000, () => {
-  console.log("API + Socket running on port 4000");
+httpServer.listen(PORT, () => {
+  console.log("API + Socket running on port", PORT);
 });
