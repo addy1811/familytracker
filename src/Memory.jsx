@@ -38,7 +38,7 @@ export default function Memory({ user, refreshUser, onLogout }) {
 
   /* ------------------ FETCH MEMORIES ------------------ */
   useEffect(() => {
-    fetch("http://localhost:4000/api/memories", { credentials: "include" })
+    fetch(`${import.meta.env.VITE_API_URL}/api/memories`, { credentials: "include" })
       .then(res => res.json())
       .then(setMemories)
       .catch(console.error);
@@ -70,7 +70,7 @@ export default function Memory({ user, refreshUser, onLogout }) {
     if (!window.confirm("Delete this memory?")) return;
 
     const res = await fetch(
-      `http://localhost:4000/api/memories/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/memories/${id}`,
       { method: "DELETE", credentials: "include" }
     );
 

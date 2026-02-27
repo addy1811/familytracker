@@ -44,7 +44,7 @@ export default function CreateMemory() {
       formData.append("description", description);
       formData.append("image", image);
   
-      const res = await fetch("http://localhost:4000/api/memories", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/memories`, {
         method: "POST",
         body: formData,
         credentials: "include",

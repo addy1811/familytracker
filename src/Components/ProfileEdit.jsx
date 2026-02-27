@@ -11,7 +11,7 @@ export default function ProfileEdit({refreshUser}) {
   const [preview, setPreview] = useState(AVATAR);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/me", {
+    fetch(`${import.meta.env.VITE_API_URL}/me`, {
       credentials: "include",
     })
       .then(res => res.json())
