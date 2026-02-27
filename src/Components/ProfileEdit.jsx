@@ -41,7 +41,7 @@ export default function ProfileEdit({refreshUser}) {
     if (dob) formData.append("dob", dob);
     if (photo) formData.append("photo", photo);
   
-    const res = await fetch("http://localhost:4000/api/me/profile", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/me/profile`, {
       method: "POST",
       credentials: "include",
       body: formData
