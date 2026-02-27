@@ -115,8 +115,12 @@ app.post("/api/signup", async (req, res) => {
       [name, email, hash]
     );
     res.status(201).json(result.rows[0]);
-  } catch {
-    res.status(400).json({ error: "User already exists" });
+  } catch (err) {
+    console.error("SIGNUP ERROR:", err); // 👈 IMPORTANT
+    res.status(500).json({
+      error: "Signup failed",
+      details: err.message
+    });
   }
 });
 
